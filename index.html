@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>LCA talk</title>
+  <title>The Web Is Dead! Long Live The Web!</title>
   <meta name="viewport" content="width=device-width, user-scalable=no" />
   <link rel="stylesheet" type="text/css" href="main.css" media="screen" />
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto:300,400,600" rel="stylesheet" />
@@ -9,6 +9,11 @@
   <script type="module">
 
     import './elements.js';
+
+    window.addEventListener('hashchange', (ev) => {
+      const active = +window.location.hash.substr(1);
+      talk.active = active;
+    });
 
     document.body.addEventListener('keyup', (ev) => {
       // nb. use keyup as a simple delayer/deduper
@@ -18,6 +23,21 @@
         ++talk.active;
       }
     });
+
+    const mo = new MutationObserver(() => {
+      if (talk.active) {
+        const hash = `#${talk.active}`;
+        if (hash !== window.location.hash) {
+          window.history.pushState(null, null, hash);
+        }
+      } else {
+        const pathname = window.location.pathname;
+        if (window.location.hash) {
+          window.history.pushState(null, null, pathname);
+        }
+      }
+    });
+    mo.observe(talk, {attributes: true, attributeFilter: ['active']});
 
   </script>
   <style>
@@ -35,7 +55,7 @@
       bottom: 0;
       z-index: -100;
       background: url(bg-white.png) center no-repeat;
-      background-size: contain;
+      background-size: cover;
     }
     article[feature] {
       color: white;
@@ -61,7 +81,7 @@
     <img src="bg-mixed.png" />
   </div>
 
-  <live-viewport width="1280" height="720">
+  <live-viewport>
     <live-talk id="talk" active="0" heading="The Web Is Dead! Long Live The Web!">
       <article slot="slide">
 

@@ -9,11 +9,13 @@ class LiveViewportElement extends HTMLElement {
   #all {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   #host {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: calc(var(--viewport-width, 1280px) / -2);
+    margin-top: calc(var(--viewport-height, 720px) / -2);
     box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.33);
     width: var(--viewport-width, 1280px);
     height: var(--viewport-height, 720px);
