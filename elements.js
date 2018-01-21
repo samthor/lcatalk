@@ -57,6 +57,7 @@ class LiveTalkElement extends HTMLElement {
       height: 100%;
       display: flex;
       flex-flow: column;
+      justify-content: center;
       position: relative;
       overflow: hidden;
     }
@@ -66,8 +67,7 @@ class LiveTalkElement extends HTMLElement {
     header {
       padding: 0.6em;
       border-bottom: 4px solid #ccc;
-      margin: 1em;
-      margin-top: 12px;
+      margin: 0 1em 0;
       font-weight: 600;
       color: #666;
       display: flex;
@@ -80,6 +80,9 @@ class LiveTalkElement extends HTMLElement {
 
     #slides.feature .feature-hide {
       display: none;
+    }
+    #slides.feature main {
+      flex-grow: 0;
     }
 
     small {
@@ -151,6 +154,10 @@ class LiveTalkElement extends HTMLElement {
     this._total = children.length;
     this._currentEl.textContent = active + 1;
     this._totalEl.textContent = this._total;
+
+    if (active >= this._total) {
+      this._currentEl.textContent += '?';
+    }
 
     const isFeature = slide && slide.hasAttribute('feature');
     this._slidesEl.classList.toggle('feature', isFeature);

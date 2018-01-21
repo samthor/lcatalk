@@ -4,73 +4,14 @@
   <title>The Web Is Dead! Long Live The Web!</title>
   <meta name="viewport" content="width=device-width, user-scalable=no" />
   <link rel="stylesheet" type="text/css" href="main.css" media="screen" />
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto:300,400,600" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto:300,400,500,600" rel="stylesheet" />
   <link rel="manifest" href="manifest.json" />
   <script type="module">
 
     import './elements.js';
-
-    window.addEventListener('hashchange', (ev) => {
-      const active = +window.location.hash.substr(1);
-      talk.active = active;
-    });
-
-    document.body.addEventListener('keyup', (ev) => {
-      // nb. use keyup as a simple delayer/deduper
-      if (ev.key === 'ArrowLeft' && talk.active > 0) {
-        --talk.active;
-      } else if (ev.key === 'ArrowRight') {
-        ++talk.active;
-      }
-    });
-
-    const mo = new MutationObserver(() => {
-      if (talk.active) {
-        const hash = `#${talk.active}`;
-        if (hash !== window.location.hash) {
-          window.history.pushState(null, null, hash);
-        }
-      } else {
-        const pathname = window.location.pathname;
-        if (window.location.hash) {
-          window.history.pushState(null, null, pathname);
-        }
-      }
-    });
-    mo.observe(talk, {attributes: true, attributeFilter: ['active']});
+    import './hashchange.js';
 
   </script>
-  <style>
-
-    article {
-      margin: 1.6em;
-    }
-
-    article::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: -100;
-      background: url(bg-white.png) center no-repeat;
-      background-size: cover;
-    }
-    article[feature] {
-      color: white;
-    }
-    article[feature]::before {
-      background-image: url(bg-gray.png);
-    }
-
-    article h1 {
-      font-size: 3em;
-      font-weight: 600;
-    }
-    
-
-  </style>
 </head>
 <body>
 
@@ -83,19 +24,224 @@
 
   <live-viewport>
     <live-talk id="talk" active="0" heading="The Web Is Dead! Long Live The Web!">
-      <article slot="slide">
 
-<h1>PWAs</h1>
+<!-- Intro -->
+<article slot="slide" id="slide-intro" feature>
 
-      </article>
-      <article slot="slide" feature>
-        Slide 2
-      </article>
-      <article slot="slide">
-        Slide 3
-      </article>
+  <div class="big-mid">
+    <img src="icon-256.png" width="128" height="128" />
+    <main>
+      <h1>The Web Is Dead!</h1>
+      <h1>Long Live The Web!</h1>
+
+      <h2>Sam Thorogood <small>@samthor</small></h2>
+    </main>
+  </div>
+
+</article>
+
+<article slot="slide">
+<h2>The Web Is Dead</h2>
+
+<ul>
+  <li>Native apps killed it</li>
+</ul>
+
+</article>
+
+<article slot="slide">
+
+<p>TODO: something image about the web being dead</p>
+
+</article>
+
+<article slot="slide">
+
+<p>TODO: zero apps per month</p>
+
+</article>
+
+<article slot="slide" feature>
+<h2>What's Old Is New Again</h2>
+
+<ul>
+  <li>... the Web is not dead</li>
+  <li>... when rounded down, no-one wants to install your native app</li>
+  <li>... URLs still mean something</li>
+</ul>
+
+</article>
+
+<!-- talk about Sam -->
+
+<article slot="slide">
+
+<h2>Sam Thorogood</h2>
+<ul>
+  <li>Developer Programs Engineer at Google</li>
+  <li>Full disclosure: this is my job</li>
+  <li>But I've always been a big fan of the web</li>
+</ul>
+<h3>Projects</h3>
+<ul>
+  <li>Santa Tracker</li>
+  <li>Emojityper.com</li>
+  <li>Misc polyfills—<code>dialog</code>, <code>inert</code></li>
+</ul>
+
+</article>
+
+<!-- introduce concepts -->
+
+<article slot="slide">
+
+<h2>Progressive Web Apps</h2>
+<ul>
+  <li>This is an entirely made up term</li>
+  <li>It's something you tell your managers/investor</li>
+</ul>
+
+</article>
+
+<article slot="slide">
+
+<div style="float: right">
+  <h1>🔥</h1>
+</div>
+
+<h1><em>F</em>ast</h2>
+<h1><em>I</em>ntegrated</h2>
+<h1><em>R</em>eliable</h2>
+<h1><em>E</em>ngaging</h2>
+
+</article>
+
+<!-- TODO: slides about FIRE -->
+
+<!-- talk about technical parts -->
+
+<article slot="slide">
+<h2>Integrated: Add To Home Screen</h2>
+<ul>
+  <li>Users can already do this—iOS famously pioneered then ignored it</li>
+  <li>But no-one does: so "ATHS" refers to a <em>prompt to install</em> and the config your site provides</li>
+  <ul>
+    <li>This config, the <em>Web App Manifest</em> includes title, icons, orientation, theming</li>
+  </ul>
+</ul>
+</article>
+
+<article slot="slide">
+<h2>ATHS</h2>
+<p>TODO: format, use, caveats</p>
+</article>
+
+<article slot="slide">
+<h2>Integrated also means</h2>
+<ul>
+  <li>Using modern APIs where possible</li>
+  <li>e.g., Web Payments API, Media APIs, ...</li>
+  <li>Not everything is here yet</li>
+</ul>
+</article>
+
+<article slot="slide">
+
+<h2>Reliable: Service Worker</h2>
+
+<ul>
+  <li>We cache assets and work offline via a <em>Service Worker</em></li>
+  <li>This is a JavaScript file which:</li>
+  <ol>
+    <li>Has an event lifecycle, including <code>install</code>, <code>activate</code> and <ode>deactivate</code> events</li>
+    <li>Can proxy any network request made by your site</li>
+    <li>Gets automatically <em>installed</em> on supported browsers</li>
+  </ol>
+</ul>
+
+</article>
+
+<article slot="slide">
+<h2>Strategies</h2>
+
+<ul>
+  <li>Can cache everything (simple static site)</li>
+  <li>Can cache core HTML, assets etc, load articles at runtime (news sites)</li>
+  <li>Cache some, indicate what's missing (wikis)</li>
+</ul>
+<p>
+  TODO: image showing you don't want to cache 200mbs
+</p>
+
+</article>
+<article slot="slide">
+
+<h2>Imperative</h2>
+<ul>
+  <li>The <em>Service Worker</em> is an imperative script—it can handle requests in any way</li>
+  <ul>
+    <li>Via the network</li>
+    <li>Via a cache</li>
+    <li>By racing the two requests</li>
+    <ul>
+      <li>(yes, the cache on disk is sometimes slower than the network.)</li>
+    </ul>
+    <li>Generating a dynamic/fake response—think stub images</li>
+  </ul>
+</ul>
+
+<ul>
+  <li>It still handles HTTP requests—you can't "answer it again later", e.g., cache then (slow) network</li>
+  <li>Maybe with liberal application of client-side JavaScript</li>
+</ul>
+
+</article>
+
+<article slot="slide" feature>
+<h2>This site works offline</h2>
+<p>Demo time!</p>
+<p>TODO: add a brand new handler and show that off</p>
+</article>
+
+<article slot="slide">
+<h2>Typical strategy</h2>
+<p>TODO: graph</p>
+</article>
+
+<article slot="slide">
+<h2>Proxy vs dynamic content in JS</h2>
+<ul>
+  <li>Service Worker allows for an extreme approach:</li>
+  <ul>
+    <li>Run minimal JavaScript and allow the Service Worker to generate whole sites for you—think templating engines inside the JS</li>
+  </ul>
+  <li>But... you probably just want to cache static content and load the rest with JavaScript, potentially putting that into a different, normal browser cache</li>
+  <li>TODO: put into picture</li>
+  <li>Not everyone has support</li>
+</ul>
+</article>
+
+<article slot="slide">
+
+<h2>Engaging: Push Notifications</h2>
+<p>TODO: button to trigger one, maybe on phone?</p>
+
+</article>
+
+<article slot="slide">
+
+<h2>... but every site asks for it</h2>
+<ul>
+  <li>We're not happy either</li>
+  <li>Acceptance rate is much, much lower than when based on a user action (e.g. button click "Notify me")</li>
+</ul>
+
+</article>
+
     </live-talk>
   </live-viewport>
+
+<a href="https://rego.linux.conf.au/schedule/presentation/81/">LCA</a>
 
 </body>
 </html>
