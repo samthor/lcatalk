@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>LCA talk</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
+  <link rel="stylesheet" type="text/css" href="main.css" media="screen" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto:300,400,600" rel="stylesheet" />
+  <link rel="manifest" href="manifest.json" />
+  <script type="module">
+
+    import './elements.js';
+
+    document.body.addEventListener('keyup', (ev) => {
+      // nb. use keyup as a simple delayer/deduper
+      if (ev.key === 'ArrowLeft' && talk.active > 0) {
+        --talk.active;
+      } else if (ev.key === 'ArrowRight') {
+        ++talk.active;
+      }
+    });
+
+  </script>
+  <style>
+
+    article {
+      margin: 1.6em;
+    }
+
+    article::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -100;
+      background: url(bg-white.png) center no-repeat;
+      background-size: contain;
+    }
+    article[feature] {
+      color: white;
+    }
+    article[feature]::before {
+      background-image: url(bg-gray.png);
+    }
+
+    article h1 {
+      font-size: 3em;
+      font-weight: 600;
+    }
+    
+
+  </style>
+</head>
+<body>
+
+  <div hidden>
+    <!-- preloader -->
+    <img src="bg-white.png" />
+    <img src="bg-gray.png" />
+    <img src="bg-mixed.png" />
+  </div>
+
+  <live-viewport width="1280" height="720">
+    <live-talk id="talk" active="0" heading="The Web Is Dead! Long Live The Web!">
+      <article slot="slide">
+
+<h1>PWAs</h1>
+
+      </article>
+      <article slot="slide" feature>
+        Slide 2
+      </article>
+      <article slot="slide">
+        Slide 3
+      </article>
+    </live-talk>
+  </live-viewport>
+
+</body>
+</html>

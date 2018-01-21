@@ -1,0 +1,15 @@
+{
+  "name": "The Web Is Dead! Long Live The Web!",
+  "short_name": "Web 💀👑",
+  "icons": [
+    {
+      "src": "icon-256.png",
+      "sizes": "256x256"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/",
+  "orientation": "landscape",
+  "theme_color": "#36474f",
+  "background_color": "#fff"
+}
