@@ -10,12 +10,12 @@ self.addEventListener('install', (event) => {
 
     // cache a known list of resources on install
     await cache.addAll([
-      '/',
-      '/elements.js',
-      '/hashchange.js',
-      '/icon-256.png',
-      '/main.css',
-      '/manifest.json',
+      './',
+      './elements.js',
+      './hashchange.js',
+      './icon-256.png',
+      './main.css',
+      './manifest.json',
     ]);
   };
   event.waitUntil(p());
@@ -24,12 +24,9 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   console.info('fetch for', event.request.url, self.location.origin);
 
-  if (event.request.url === `${self.location.origin}/bar`) {
-    return event.respondWith(new Response('loaded bar'))
-  }
-
   // special handler for /foo
-  if (event.request.url === `${self.location.origin}/foo`) {
+  if (event.request.url === `${self.location.origin}/lcatalk/foo` ||
+      event.request.url === `${self.location.origin}/foo`) {
     const generateFakeData = async () => {
 
       // wait 2s to be infuriating
