@@ -479,20 +479,41 @@ self.addEventListener('install', (event) => {
 
 <div>
   <button id="toggle_camera" style="font-size: 1em">Camera</button>
+  <button id="toggle_orient" style="font-size: 1em">Orientation</button>
 </div>
-<video width="500" height="300" id="camera_stream" autoplay></video>
-<script>
+<div style="perspective: 1000px">
+  <video width="500" height="300" id="camera_stream" autoplay></video>
+</div>
+<script type="module">
 toggle_camera.addEventListener('click', (ev) => {
   ev.stopPropagation();
   if (camera_stream.src) {
     window.URL.revokeObjectURL(camera_stream.src);
     camera_stream.src = '';
+    camera_stream.removeAttribute('src');
     return;
   }
-  navigator.getUserMedia({video: {facingMode: 'user'}}).then((stream) => {
+  navigator.mediaDevices.getUserMedia({video: {facingMode: 'user'}}).then((stream) => {
     camera_stream.src = window.URL.createObjectURL(stream);
     camera_stream.play();
   });
+});
+let orientation_handler = null;
+toggle_orient.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+
+  if (orientation_handler) {
+    camera_stream.style.transform = null;
+    window.removeEventListener('deviceorientation', orientation_handler);
+    orientation_handler = null;
+  } else {
+    orientation_handler = (ev) => {
+      camera_stream.style.transform =
+        `rotateZ(${ev.alpha}deg) rotateX(${ev.beta}deg) rotateY(${ev.gamma}deg)`;
+    };
+    window.addEventListener('deviceorientation', orientation_handler);
+  }
+
 });
 </script>
 
