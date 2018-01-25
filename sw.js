@@ -1,5 +1,7 @@
 
-const BYPASS = false;
+// version bump Thu 22:00
+
+const BYPASS = true;
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
