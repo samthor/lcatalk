@@ -347,41 +347,55 @@
 <ul>
   <li>Using modern APIs where possible</li>
   <ul>
-    <li>e.g., Web Payments API, Media APIs, ...</li>
+    <li>e.g., Payment Request API, Media APIs, ...</li>
     <li>Not everything is here yet</li>
   </ul>
 </ul>
 </article>
 
 <article slot="slide">
-<h2>Reliable: Service Worker</h2>
+<h2 class="fire">Reliable</h2>
 <ul>
-  <li>We cache assets and work offline via a <em>Service Worker</em></li>
-  <li>This is a JavaScript file which:</li>
+  <li>The <em>Service Worker</em> lets us handle network requests</li>
+  <li>This is a JS file, which—</li>
   <ol>
-    <li>Has an event lifecycle, including <code>install</code>, <code>activate</code> and <ode>deactivate</code> events</li>
-    <li>Can proxy any network request made by your site</li>
-    <li>Gets automatically <em>installed</em> on supported browsers</li>
+    <li>Can proxy <em>all</em> network requests made by your site</li>
+    <li>Gets installed after a user first loads your page</li>
   </ol>
 </ul>
 </article>
 
 <article slot="slide">
-<h2>Service Worker</h2>
-
+<h2>Install a Service Worker</h2>
 <pre class="box">
+<em>&lt;!-- index.html --&gt;</em>
+&lt;script&gt;
+  navigator.serviceWorker.register('/service-worker.js').then(() => {
+    console.info('yay!');
+  });
+&lt;/script&gt;
+</pre>
+</article>
+
+<article slot="slide">
+<h2>Basic Service Worker</h2>
+<pre class="box">
+<em>// service-worker.js</em>
 self.addEventListener('fetch', (event) => {
-  if (event.request.url === `https://yoursite.com/`) {
-    <strong>event.respondWith(new Response(`I'm a fake index page!`));</strong>
+  if (event.request.url === `https://yoursite.com/generated.html`) {
+    <strong>event.respondWith(new Response(`I'm a generated page!`));</strong>
+  } else {
+    <strong>event.respondWith(fetch(event.request));</strong>
   }
 });
 </pre>
 </article>
 
 <article slot="slide">
-<h2>Service Worker</h2>
+<h2>Real Service Worker</h2>
 
 <pre class="box">
+<em>// service-worker.js</em>
 self.addEventListener('install', (event) => {
   event.waitUntil(
     self.caches.open('lcatalk').then((cache) => {
@@ -392,9 +406,24 @@ self.addEventListener('install', (event) => {
 
 <span style="opacity: 0.25">self.addEventListener('fetch', (event) => {
   if (event.request.url === `https://yoursite.com/`) {
-    &hellip;
-</span>
-</pre>
+    &hellip;</span></pre>
+</article>
+
+<article slot="slide">
+<h2>Real Service Worker</h2>
+
+<pre class="box"><span style="opacity: 0.25">    self.caches.open('lcatalk').then((cache) => {
+      <strong>return cache.addAll(['/', '/code.js', &hellip;]);</strong>
+    });
+  );
+});</span>
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(self.caches.open('lcatalk')
+    .then((cache) => <strong>cache.match(event.request))</strong>
+    .then((response) => response || fetch(event.request))
+  )
+});</span></pre>
 </article>
 
 <article slot="slide">
@@ -454,8 +483,17 @@ self.addEventListener('install', (event) => {
 
 <article slot="slide">
 
-<h2>Engaging: Push Notifications</h2>
-<p>TODO: button to trigger one, maybe on phone?</p>
+<h2 class="fire">Engaging</h2>
+<img src="assets/notifications.png" width="400" style="position: absolute; right: 100px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);" />
+<ul>
+  <li>Push Notifications</li>
+  <li>They should be:</li>
+  <ul>
+    <li>Timeley</li>
+    <li>Precise</li>
+    <li>Relevant</li>
+  </ul>
+</ul>
 
 </article>
 
@@ -465,7 +503,7 @@ self.addEventListener('install', (event) => {
 <ul>
   <li>We're not happy either</li>
   <li>Please don't do this</li>
-  <li>Acceptance rate is much, much lower than when based on a user action (e.g. button click "Notify me")</li>
+  <li>Acceptance rate is much, much lower than when based on a user action (e.g., button click "Notify me")</li>
 </ul>
 
 </article>
@@ -520,12 +558,70 @@ toggle_orient.addEventListener('click', (ev) => {
 </article>
 
 <article slot="slide">
+<img src="assets/santa-webshare.png" width="300" style="position: absolute; right: 100px;" />
 <h2>Web Share</h2>
+
+<ul>
+  <li>Trigger the Android native share intent</li>
+  <li>Future work: act as share <em>reciever</em></li>
+</ul>
+
+</article>
+
+<article slot="slide">
+<h2>Web Payments API</h2>
+<img src="assets/payment.png" />
+</article>
+
+<article slot="slide">
+<h2>Other Native APIs</h2>
+<ul>
+  <li>Geolocation—and use geoIP</li>
+  <li>WebGL</li>
+  <li>WebUSB</li>
+  <li>Web Bluetooth</li>
+  <li>Web Audio</li>
+  <li>...</li>
+</ul>
 </article>
 
 <article slot="slide" feature>
-<h2>Lighthouse</h2>
+<h2>Finally...</h2>
 </article>
+
+<article slot="slide">
+<h2>Santa Tracker</h2>
+<ul>
+  <li>Open-sourced at <a href="https://github.com/google/santa-tracker-web">https://github.com/google/santa-tracker-web</a></li>
+  <li>Video series and more resources on YouTube</li>
+</ul>
+<img src="assets/santa-devdiary.png" width="900" />
+</article>
+
+<article slot="slide">
+<h2>More Resources</h2>
+<ul>
+  <li>🔎 "Progressive Web Apps"</li>
+  <ul class="extra-margin">
+    <li>Google Developers</li>
+    <li>Chrome Developers on YouTube</li>
+    <li>Samsung on Medium</li>
+  </ul>
+  <li><a href="https://serviceworke.rs/">https://serviceworke.rs/</a></li>
+</ul>
+</article>
+
+<!-- Intro -->
+<article slot="slide" id="slide-intro" feature>
+  <div class="big-mid">
+    <img src="icon-256.png" width="128" height="128" />
+    <main style="font-size: 24px;">
+      <h1>Thanks</h1>
+      <h2>Sam Thorogood <small>@samthor</small></h2>
+    </main>
+  </div>
+</article>
+
 
     </live-talk>
   </live-viewport>
