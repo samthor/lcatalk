@@ -1,5 +1,5 @@
 
-const BYPASS = true;
+const BYPASS = false;
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
