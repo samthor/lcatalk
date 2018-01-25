@@ -11,6 +11,12 @@
     import './elements.js';
     import './hashchange.js';
 
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('/sw.js').then(() => {
+        console.info('sw ok!');
+      });
+    }
+
   </script>
 </head>
 <body>
@@ -27,37 +33,150 @@
 
 <!-- Intro -->
 <article slot="slide" id="slide-intro" feature>
-
   <div class="big-mid">
     <img src="icon-256.png" width="128" height="128" />
-    <main>
+    <main style="font-size: 24px;">
       <h1>The Web Is Dead!</h1>
       <h1>Long Live The Web!</h1>
 
       <h2>Sam Thorogood <small>@samthor</small></h2>
     </main>
   </div>
-
 </article>
 
 <article slot="slide">
-<h2>The Web Is Dead</h2>
+<!-- In the 90's, everyone could make a website. I even had one about Quake mods. -->
+<div class="big-mid vert">
+  <img src="assets/dragotchi.png" width="840" style="margin-bottom: -100px;" />
+</div>
+</article>
+
+<article slot="slide">
+<!-- Ajax gives us the experiences we _expect_, today -->
+<div class="big-mid">
+  <img src="assets/ajax.png" width="800" />
+</div>
+</article>
+
+<article slot="slide">
+<!-- spawned a user content revolution with these amazing sites -->
+<div class="big-mid">
+  <img src="assets/django.png" width="600" />
+</div>
+</article>
+
+<article slot="slide">
+<!-- But also these really complex experiences like Maps, Slack etc. -->
+<div class="big-mid">
+  <img src="assets/maps.png" width="800" />
+</div>
+</article>
+
+<article slot="slide">
+<h2>Mobile Happened</h2>
 
 <ul>
-  <li>Native apps killed it</li>
+  <li>"There's an app for that"—native capabilities have made apps sexy</li>
+  <li>Mobile has easily overtaken desktop</li>
 </ul>
 
-</article>
-
-<article slot="slide">
-
-<p>TODO: something image about the web being dead</p>
+<div data-appear="1" class="big-mid">
+  <img src="assets/web-is-dead.png" width="800" style="margin-top: 50px;" />
+</div>
 
 </article>
 
-<article slot="slide">
 
-<p>TODO: zero apps per month</p>
+<article slot="slide">
+<div class="big-point">
+  <div style="display: flex; align-items: center;">
+    <h1 style="margin-right: 0.25em">ZERO</h1>
+    <div>
+      apps installed per month
+    </div>
+  </div>
+  <aside>Source: comScore MobiLens, U.S., Age 13+, 3 Month Average Ending June 2017</aside>
+</div>
+</article>
+
+<article slot="slide">
+<div class="big-point">
+  <div style="display: flex; align-items: center;">
+    <div>&hellip;</div>
+    <h1 style="margin: 0 0.25em; color: #c33">ONE</h1>
+    <div>
+      app installed per month
+    </div>
+  </div>
+  <aside>Source: Tune, "No, Americans do not install an average of zero apps per month", July 2016</aside>
+</div>
+</article>
+
+<article slot="slide">
+<div class="big-point">
+  <div style="display: flex; align-items: center;">
+    <h1 style="margin-right: 0.25em">78%</h1>
+    <div>
+      of time is spent in a users' top three apps
+    </div>
+  </div>
+  <aside>Source: comScore Mobile Metrix (Custom), U.S., Age 18+, June 2017</aside>
+</div>
+</article>
+
+<article slot="slide">
+<div class="big-point" style="align-items: center; width: 90%">
+<img src="assets/walls.png" width="800" />
+</div>
+</article>
+
+<article slot="slide">
+<img src="assets/twitter.png" width="800" />
+</article>
+
+<article slot="slide">
+<img src="assets/twitter.png" width="800" />
+<img src="assets/twitter-framed.png" width="600" style="position: absolute; right: 100px;" />
+</article>
+
+<article slot="slide">
+<h2>So if</h2>
+
+<ul>
+  <li>You are developing something</li>
+  <li>... for other humans to consume (e.g. "content")</em></li>
+  <li>... for other humans to use (e.g. "app")</em></li>
+</ul>
+</article>
+
+<article slot="slide">
+<h2>The web is</h2>
+
+<ul>
+  <li>The most open platform we have</li>
+  <li>The easiest way to share with <em>anyone</em></li>
+</ul>
+</article>
+
+<article slot="slide">
+  <div class="big-mid">
+  <img src="assets/friction.png" />
+</div>
+</article>
+
+<article slot="slide">
+<h2>Build Better Websites</h2>
+
+<ul>
+  <li>Capabilities have caught up with <em>reach</em></li>
+  <ul class="extra-margin">
+    <li>Think native APIs, performance</li>
+  </ul>
+  <li>Evergreen browsers provide a great base</li>
+  <ul class="extra-margin">
+    <li>... to <em>progressively enhance</em> your users' experience</li>
+  </ul>
+</ul>
 
 </article>
 
@@ -65,9 +184,9 @@
 <h2>What's Old Is New Again</h2>
 
 <ul>
-  <li>... the Web is not dead</li>
   <li>... when rounded down, no-one wants to install your native app</li>
   <li>... URLs still mean something</li>
+  <li>... the Web is not dead</li>
 </ul>
 
 </article>
@@ -79,32 +198,55 @@
 <h2>Sam Thorogood</h2>
 <ul>
   <li>Developer Programs Engineer at Google</li>
-  <li>Full disclosure: this is my job</li>
-  <li>But I've always been a big fan of the web</li>
 </ul>
 <h3>Projects</h3>
 <ul>
-  <li>Santa Tracker</li>
+  <li>YouTube videos, blog posts</li>
+  <li>Misc web polyfills—<code>dialog</code>, <code>inert</code></li>
   <li>Emojityper.com</li>
-  <li>Misc polyfills—<code>dialog</code>, <code>inert</code></li>
+  <li>&hellip;</li>
 </ul>
 
+</article>
+
+<article slot="slide" id="slide-site" feature>
+<div class="center">
+  <h2>Santa Tracker</h2>
+  <img src="assets/santa-site.png" width="900" style="margin-bottom: -220px;" />
+</div>
+</article>
+
+<article slot="slide" id="slide-santavideo" feature>
+<div class="center">
+  <h2>Santa Tracker</h2>
+  <video src="assets/elfski.mov" height="240" autoplay muted loop></video>
+  <video src="assets/snowball.mov" height="240" autoplay muted loop></video>
+</div>
+</article>
+
+<article slot="slide" feature>
+<div class="center">
+  <img src="assets/santa-pwa.png" width="800" />
+</div>
 </article>
 
 <!-- introduce concepts -->
 
 <article slot="slide">
-
 <h2>Progressive Web Apps</h2>
 <ul>
-  <li>This is an entirely made up term</li>
-  <li>It's something you tell your managers/investor</li>
+  <li>We just made this phrase up</li>
+  <ul>
+    <li>It's a conversation piece—the "other option" vs sinking $$ into an app</li>
+    <li>Good to search for</li>
+  </ul>
 </ul>
-
+<div data-appear="1" class="big-mid">
+  <img src="assets/searches.png" width="700" />
+</div>
 </article>
 
-<article slot="slide">
-
+<article slot="slide" id="slide-fire">
 <div style="float: right">
   <h1>🔥</h1>
 </div>
@@ -121,6 +263,15 @@
 <!-- talk about technical parts -->
 
 <article slot="slide">
+<div class="big-point">
+  <div style="display: flex; align-items: center;">
+    <h1 style="margin-right: 0.25em">20-50%</h1>
+    <div>of users will abandon your site after 3s loading</div>
+  </div>
+</div>
+</article>
+
+<article slot="slide">
 <h2>Integrated: Add To Home Screen</h2>
 <ul>
   <li>Users can already do this—iOS famously pioneered then ignored it</li>
@@ -132,23 +283,56 @@
 </article>
 
 <article slot="slide">
-<h2>ATHS</h2>
-<p>TODO: format, use, caveats</p>
+<h2>Web App Manifest</h2>
+<pre class="box">
+{
+  "name": "The Web Is Dead! Long Live The Web!",
+  "short_name": "Web 💀👑",
+  "icons": [
+    {"src": "icon-256.png", "sizes": "256x256"}
+  ],
+  "display": "standalone",
+  "start_url": "/",
+  "orientation": "landscape",
+  "theme_color": "#36474f",
+  "background_color": "#fff"
+}
+</pre>
 </article>
+
+<article slot="slide">
+<img src="assets/manifest.png" align="right" style="z-index: 100; position: relative;" height="440" />
+<h2>Web App Manifest</h2>
+<pre class="box" style="opacity: 0.25;">
+{
+  "name": "The Web Is Dead! Long Live The Web!",
+  "short_name": "Web 💀👑",
+  "icons": [
+    {"src": "icon-256.png", "sizes": "256x256"}
+  ],
+  "display": "standalone",
+  "start_url": "/",
+  "orientation": "landscape",
+  "theme_color": "#36474f",
+  "background_color": "#fff"
+}
+</pre>
+</article>
+
 
 <article slot="slide">
 <h2>Integrated also means</h2>
 <ul>
   <li>Using modern APIs where possible</li>
-  <li>e.g., Web Payments API, Media APIs, ...</li>
-  <li>Not everything is here yet</li>
+  <ul>
+    <li>e.g., Web Payments API, Media APIs, ...</li>
+    <li>Not everything is here yet</li>
+  </ul>
 </ul>
 </article>
 
 <article slot="slide">
-
 <h2>Reliable: Service Worker</h2>
-
 <ul>
   <li>We cache assets and work offline via a <em>Service Worker</em></li>
   <li>This is a JavaScript file which:</li>
@@ -158,7 +342,37 @@
     <li>Gets automatically <em>installed</em> on supported browsers</li>
   </ol>
 </ul>
+</article>
 
+<article slot="slide">
+<h2>Service Worker</h2>
+
+<pre class="box">
+self.addEventListener('fetch', (event) => {
+  if (event.request.url === `https://yoursite.com/`) {
+    <strong>event.respondWith(new Response(`I'm a fake index page!`));</strong>
+  }
+});
+</pre>
+</article>
+
+<article slot="slide">
+<h2>Service Worker</h2>
+
+<pre class="box">
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    self.caches.open('lcatalk').then((cache) => {
+      <strong>return cache.addAll(['/', '/code.js', &hellip;]);</strong>
+    });
+  );
+});
+
+<span style="opacity: 0.25">self.addEventListener('fetch', (event) => {
+  if (event.request.url === `https://yoursite.com/`) {
+    &hellip;
+</span>
+</pre>
 </article>
 
 <article slot="slide">
@@ -169,10 +383,6 @@
   <li>Can cache core HTML, assets etc, load articles at runtime (news sites)</li>
   <li>Cache some, indicate what's missing (wikis)</li>
 </ul>
-<p>
-  TODO: image showing you don't want to cache 200mbs
-</p>
-
 </article>
 <article slot="slide">
 
@@ -199,8 +409,7 @@
 
 <article slot="slide" feature>
 <h2>This site works offline</h2>
-<p>Demo time!</p>
-<p>TODO: add a brand new handler and show that off</p>
+<p>Demo time!&mdash;Load the <a href="/foo">/foo</a> handler—and open DevTools</p>
 </article>
 
 <article slot="slide">
@@ -233,15 +442,53 @@
 <h2>... but every site asks for it</h2>
 <ul>
   <li>We're not happy either</li>
+  <li>Please don't do this</li>
   <li>Acceptance rate is much, much lower than when based on a user action (e.g. button click "Notify me")</li>
 </ul>
 
 </article>
 
+<article slot="slide" feature>
+<h2>The web can do what?!</h2>
+</article>
+
+<article slot="slide">
+<h2>Media APIs</h2>
+
+<div>
+  <button id="toggle_camera" style="font-size: 1em">Camera</button>
+</div>
+<video width="500" height="300" id="camera_stream"></video>
+<script>
+toggle_camera.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  if (camera_stream.src) {
+    window.URL.revokeObjectURL(camera_stream.src);
+    camera_stream.src = '';
+    return;
+  }
+  navigator.getUserMedia({video: true}, (stream) => {
+    camera_stream.src = window.URL.createObjectURL(stream);
+  }, () => {});
+});
+</script>
+
+</article>
+
+<article slot="slide">
+<h2>Web Share</h2>
+</article>
+
+<article slot="slide" feature>
+<h2>Lighthouse</h2>
+</article>
+
     </live-talk>
   </live-viewport>
 
+<!--
 <a href="https://rego.linux.conf.au/schedule/presentation/81/">LCA</a>
+-->
 
 </body>
 </html>

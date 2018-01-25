@@ -38,6 +38,28 @@ class LiveViewportElement extends HTMLElement {
   </div>
 </div>
     `;
+
+    this._host = this.root.getElementById('host');
+    window.addEventListener('resize', () => this._resize());
+    this._resize();
+  }
+
+  _resize() {
+    // TODO: we just assume these targets for now
+    const targetWidth = 1280;
+    const targetHeight = 720;
+
+    // give some leeway: this allows my MBP 13" to render the site without resize in Chrome
+    const allowedPadding = 16;
+    const ratioWidth = window.innerWidth / (targetWidth - allowedPadding * 2);
+    const ratioHeight = window.innerHeight / (targetHeight - allowedPadding * 2);
+
+    if (ratioWidth >= 1.0 && ratioHeight >= 1.0) {
+      this._host.style.transform = null;
+    } else {
+      const min = Math.min(ratioWidth, ratioHeight);
+      this._host.style.transform = `scale(${min})`;
+    }
   }
 }
 
@@ -50,47 +72,49 @@ class LiveTalkElement extends HTMLElement {
     this.root = this.attachShadow({mode: 'open'});
     this.root.innerHTML = `
 <style>
-    ::slotted(article:not(.active)) {
-      display: none;
-    }
-    #slides {
-      height: 100%;
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-    main {
-      flex-grow: 1;
-    }
-    header {
-      padding: 0.6em;
-      border-bottom: 4px solid #ccc;
-      margin: 0 1em 0;
-      font-weight: 600;
-      color: #666;
-      display: flex;
-    }
-    h1 {
-      font: inherit;
-      margin: 0;
-      flex-grow: 1;
-    }
+  :host {
+    user-select: none;
+  }
+  ::slotted(article:not(.active)) {
+    display: none;
+  }
+  #slides {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  main {
+    flex-grow: 1;
+  }
+  header {
+    padding: 0.6em;
+    border-bottom: 4px solid #ccc;
+    margin: 0 1em 0;
+    font-weight: 600;
+    color: #666;
+    display: flex;
+  }
+  h1 {
+    font: inherit;
+    margin: 0;
+    flex-grow: 1;
+  }
 
-    #slides.feature .feature-hide {
-      display: none;
-    }
-    #slides.feature main {
-      flex-grow: 0;
-    }
+  #slides.feature .feature-hide {
+    display: none;
+  }
+  #slides.feature main {
+    flex-grow: 0;
+  }
 
-    small {
-      font: inherit;
-      transform: scale(0.66);
-      display: inline-block;
-    }
-
+  small {
+    font: inherit;
+    transform: scale(0.66);
+    display: inline-block;
+  }
 </style>
 <div id="slides">
   <header class="feature-hide">
@@ -117,6 +141,7 @@ class LiveTalkElement extends HTMLElement {
     this._totalEl = this.root.getElementById('total');
     this._headingEl = this.root.getElementById('heading');
     this._total = 0;
+    this._slideWasActive = undefined;
 
     this._updateSlides();
   }
@@ -136,6 +161,10 @@ class LiveTalkElement extends HTMLElement {
 
   get total() {
     return this._total;
+  }
+
+  next() {
+    ++this.active;
   }
 
   _updateSlides() {
@@ -163,6 +192,12 @@ class LiveTalkElement extends HTMLElement {
     this._slidesEl.classList.toggle('feature', isFeature);
 
     this._headingEl.textContent = this.getAttribute('heading');
+
+    if (active === this._slideWasActive) {
+      return;
+    }
+    this._slideWasActive = active;
+    // TODO: could do reveal stuff here
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {

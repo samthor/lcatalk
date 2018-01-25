@@ -3,14 +3,19 @@ body {
   min-height: 100vh;
   flex-flow: column;
   font-family: 'Roboto', Sans-Serif;
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 400;
   line-height: 1.6em;
   margin: 0;
+  overflow: hidden;
 }
 live-viewport {
   width: 100vw;
   height: 100vh;
+}
+
+a {
+  color: #33f;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -36,6 +41,9 @@ article::before {
 article[feature] {
   color: white;
   font-family: 'Lato', 'Roboto';
+}
+article[feature] a {
+  color: #88f;
 }
 article[feature]::before {
   background-image: url(bg-gray.png);
@@ -67,6 +75,23 @@ article > ul {
   align-items: center;
 }
 
+.center {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#slide-santavideo h2 {
+  margin-bottom: 0.5em;
+}
+#slide-santavideo video {
+  margin: 0.25em;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+
 #slide-intro h2 {
   margin-top: 1em;
 }
@@ -74,4 +99,45 @@ article > ul {
   border-left: 4px solid white;
   padding-left: 2em;
   margin-left: 2em;
+}
+
+pre {
+}
+pre.box {
+  font-size: 0.8em;
+  line-height: 1.25em;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.125);
+}
+
+.extra-margin {
+  margin-bottom: 1em;
+}
+
+.big-point {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+}
+article:not([feature]) h1 {
+  color: #0365c0;
+}
+
+aside {
+  margin: 1em 0;
+  font-weight: 500;
+  font-size: 0.66em;
+  color: #777;
+}
+
+#slide-fire h1 em {
+  display: inline-block;
+  width: 1.2ch;
+  text-align: center;
 }

@@ -4,14 +4,20 @@ window.addEventListener('hashchange', (ev) => {
 });
 window.dispatchEvent(new Event('hashchange'));
 
-document.body.addEventListener('keyup', (ev) => {
+document.body.addEventListener('keydown', (ev) => {
   // nb. use keyup as a simple delayer/deduper
   if (ev.key === 'ArrowLeft' && talk.active > 0) {
     --talk.active;
   } else if (ev.key === 'ArrowRight') {
     ++talk.active;
+  } else if (ev.key === ' ') {
+    talk.next();
+  } else {
+    return;  // don't steal
   }
+  ev.preventDefault();
 });
+talk.addEventListener('click', () => talk.next());
 
 const mo = new MutationObserver(() => {
   if (talk.active) {
