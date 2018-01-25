@@ -141,3 +141,7 @@ aside {
   width: 1.2ch;
   text-align: center;
 }
+
+h2.fire {
+  font-weight: bold;
+}

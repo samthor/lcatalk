@@ -236,33 +236,42 @@
 <h2>Progressive Web Apps</h2>
 <ul>
   <li>We just made this phrase up</li>
-  <ul>
+  <ul class="extra-margin">
     <li>It's a conversation piece—the "other option" vs sinking $$ into an app</li>
     <li>Good to search for</li>
   </ul>
+  <li>Web experiences with <em>app-like features</em></li>
 </ul>
-<div data-appear="1" class="big-mid">
-  <img src="assets/searches.png" width="700" />
-</div>
 </article>
 
-<article slot="slide" id="slide-fire">
+<article slot="slide">
+<h2>Service Worker</h2>
+<ul>
+  <li>PWAs are made possible by Service Worker</li>
+  <li>Supported on Chrome, Firefox, Edge (soon™) and Safari (soon™)</li>
+</ul>
+</article>
+
+<article slot="slide">
+<p>TODO: service worker diagram</p>
+</article>
+
+<article slot="slide" id="slide-fire" feature>
 <div style="float: right">
   <h1>🔥</h1>
 </div>
 
-<h1><em>F</em>ast</h2>
-<h1><em>I</em>ntegrated</h2>
-<h1><em>R</em>eliable</h2>
-<h1><em>E</em>ngaging</h2>
+<h1><em>F</em>ast</h1>
+<h1><em>I</em>ntegrated</h1>
+<h1><em>R</em>eliable</h1>
+<h1><em>E</em>ngaging</h1>
 
 </article>
-
-<!-- TODO: slides about FIRE -->
 
 <!-- talk about technical parts -->
 
 <article slot="slide">
+<h2 class="fire">Fast</h2>
 <div class="big-point">
   <div style="display: flex; align-items: center;">
     <h1 style="margin-right: 0.25em">20-50%</h1>
@@ -272,13 +281,26 @@
 </article>
 
 <article slot="slide">
-<h2>Integrated: Add To Home Screen</h2>
-<ul>
-  <li>Users can already do this—iOS famously pioneered then ignored it</li>
-  <li>But no-one does: so "ATHS" refers to a <em>prompt to install</em> and the config your site provides</li>
+<h2 class="fire">Integrated</h2>
+
+<div class="big-point">
   <ul>
-    <li>This config, the <em>Web App Manifest</em> includes title, icons, orientation, theming</li>
+    <li>Launch from Home Screen</li>
+    <li>Visible in task list</li>
+    <ul class="extra-margin">
+      <li>... or as a window</li>
+    </ul>
+    <li>Access to native hardware via APIs</li>
   </ul>
+</div>
+
+</article>
+
+<article slot="slide">
+<h2>Webapps? On my Home Screen?</h2>
+<ul>
+  <li>iOS famously pioneered then ignored this</li>
+  <li>We say "Add to Home Screen", but really mean "prompt to ..."</li>
 </ul>
 </article>
 
