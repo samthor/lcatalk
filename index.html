@@ -480,7 +480,7 @@ self.addEventListener('install', (event) => {
 <div>
   <button id="toggle_camera" style="font-size: 1em">Camera</button>
 </div>
-<video width="500" height="300" id="camera_stream"></video>
+<video width="500" height="300" id="camera_stream" autoplay></video>
 <script>
 toggle_camera.addEventListener('click', (ev) => {
   ev.stopPropagation();
@@ -489,9 +489,10 @@ toggle_camera.addEventListener('click', (ev) => {
     camera_stream.src = '';
     return;
   }
-  navigator.getUserMedia({video: true}, (stream) => {
+  navigator.getUserMedia({video: {facingMode: 'user'}}).then((stream) => {
     camera_stream.src = window.URL.createObjectURL(stream);
-  }, () => {});
+    camera_stream.play();
+  });
 });
 </script>
 
