@@ -12,9 +12,32 @@
     import './hashchange.js';
 
     if (navigator.serviceWorker) {
-      navigator.serviceWorker.register('./sw.js').then(() => {
+      window.sw = navigator.serviceWorker.register('./sw.js');
+      window.sw.then((registration) => {
         console.info('sw ok!');
+
+        function urlBase64ToUint8Array(base64String) {
+          const padding = '='.repeat((4 - base64String.length % 4) % 4);
+          const base64 = (base64String + padding)
+            .replace(/\-/g, '+')
+            .replace(/_/g, '/')
+          ;
+          const rawData = window.atob(base64);
+          return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
+        }
+
+        // public key
+        const bytes = urlBase64ToUint8Array(
+          'BNoJIJIoXaGy4SLeK5jgc-BOtQ3W-SbO4MsQlsUlBBiurgJfR01H-mZSRhTjmmWPqV5MFI_xVbed5cChGsHypME'
+        );
+
+        const opts = {userVisibleOnly: true, applicationServerKey: bytes};
+        registration.pushManager.subscribe(opts).then((subscription) => {
+          console.debug('curl -H "TTL: 60" -X POST ' + subscription.endpoint);
+        });
       });
+    } else {
+      window.sw = Promise.reject(null);
     }
 
   </script>
@@ -515,12 +538,42 @@ self.addEventListener('fetch', (event) => {
   <li>Native Push Notifications</li>
   <li>...even when your site isn't open</li>
 </ul>
+<button style="font-size: 2em;" id="engage_button">Engage!</button>
+<script type="module">
+  engage_button.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    navigator.serviceWorker.ready.then((sw) => {
+      sw.active.postMessage('notify');
+    });
+  });
+</script>
 </article>
 
 <article slot="slide">
 <div style="text-align: center;">
 <img src="assets/push.png" width="550" style="margin-bottom: -160px;" />
 </div>
+</article>
+
+<article slot="slide">
+<h2>Handling remote push</h2>
+<pre class="box">
+self.addEventListener('push', (event) => {
+  <strong>self.registration.showNotification</strong>('So engaging', {
+    body: '🤔💭',
+    &hellip;
+  });
+});
+</pre>
+</article>
+
+<article slot="slide">
+<h2>Setting up push</h2>
+<pre class="box">
+/* snipped for brevity */
+/* Search for "Web Push Notifications" and open Google Developers */
+/* It involves a small amount of encryption */
+</pre>
 </article>
 
 <article slot="slide">

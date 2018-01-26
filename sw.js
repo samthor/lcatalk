@@ -61,3 +61,31 @@ self.addEventListener('fetch', (event) => {
   };
   event.respondWith(p());
 });
+
+self.addEventListener('message', (event) => {
+  if (event.data !== 'notify') {
+    throw new TypeError(`unknown message request: ${event.data}`);
+  }
+
+  self.registration.showNotification('So engaging', {
+    body: '🤔💭',
+    actions: [
+     {action: 'like', title: 'Like 🎉'},
+     {action: 'reply', title: 'Go Away 💩'},
+    ],
+  });
+});
+
+self.addEventListener('notificationclick', (event) => {  
+  if (event.action === 'like') {
+    self.registration.showNotification('So glad you liked it', {
+      body: '.....',
+    });
+  }
+  event.notification.close();
+});
+
+self.addEventListener('push', (event) => {
+  // If you're trawling around, this needs proper signing to send something here.
+  self.registration.showNotification('Got a push! 🎉🎉🎉');
+});
