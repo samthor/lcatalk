@@ -55,6 +55,22 @@ specific language governing permissions and limitations under the License.
     }
 
   </script>
+  <script defer>
+
+    function installFallbackStyles() {
+      const l = document.createElement('link');
+      l.setAttribute('rel', 'stylesheet');
+      l.setAttribute('type', 'text/css');
+      l.setAttribute('href', 'fallback.css');
+      l.setAttribute('media', 'screen');
+      document.head.appendChild(l);
+    }
+
+    if (!window.customElements || !document.documentElement.attachShadow) {
+      installFallbackStyles();
+    }
+
+  </script>
 </head>
 <body>
 

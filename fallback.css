@@ -1,0 +1,40 @@
+body {
+  overflow: auto !important;
+  justify-content: center;
+  overflow-x: hidden !important;
+}
+
+live-viewport {
+  display: flex;
+  justify-content: center;
+}
+
+article {
+  width: 1280px;
+  height: 720px;
+  position: relative;
+  padding: 1.6em;
+  border: 2px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+article[feature] {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+}
+
+@media (max-width: 1200px) {
+  article {
+    transform-origin: top center;
+    transform: scale(0.5);
+    margin-bottom: -25%;
+  }
+}
+
+@media (max-width: 640px) {
+  article {
+    transform: scale(0.33);
+    margin-bottom: -33%;
+  }
+}
